@@ -1,12 +1,16 @@
 from pathlib import Path
+import os   # 🔹 QO‘SHILDI
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-in-prod'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-change-this-in-prod"
+)  # 🔹 PROD UCHUN TO‘G‘RILANDI
 
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"  # 🔹 RENDER UCHUN
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]  # 🔹 RENDER / DEPLOY UCHUN
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -20,11 +24,10 @@ INSTALLED_APPS = [
     'drf_yasg',
 
     'loyalty',
-     
-    
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # 🔹 QO‘SHILDI
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,8 +75,12 @@ TIME_ZONE = 'Asia/Tashkent'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'   # 🔹 TO‘G‘RILANDI
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)  # 🔹 QO‘SHILDI (RENDER UCHUN)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -85,6 +92,7 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {
@@ -93,11 +101,11 @@ SWAGGER_SETTINGS = {
             'in': 'header',
             'description': (
                 'JWT Authorization header.\n\n'
-                'Format: **Bearer &lt;your_token&gt;**\n\n'
+                'Format: **Bearer <your_token>**\n\n'
                 'Example:\n'
                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
             ),
         }
     },
-    'USE_SESSION_AUTH': False,  # BASIC AUTHNI O‘CHIRADI
+    'USE_SESSION_AUTH': False,
 }
