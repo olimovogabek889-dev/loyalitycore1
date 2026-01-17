@@ -43,3 +43,6 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
 ]
 
+# SWAGGER
+path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+path('swagger.json', schema_view.without_ui(cache_timeout=0), name='swagger-json'),
