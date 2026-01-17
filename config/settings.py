@@ -27,7 +27,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # 🔹 QO‘SHILDI
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',  # 🔹 QO‘SHILDI
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
